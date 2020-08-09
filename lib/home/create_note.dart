@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/notes.dart';
+import '../model/note.dart';
 
 class CreateNote extends StatefulWidget {
   @override
@@ -31,7 +35,11 @@ class _StateCreateNote extends State<CreateNote> {
                     onPressed: () => Navigator.pop(context),
                     child: Icon(Icons.clear)),
                 FlatButton(
-                  onPressed: () => {},
+                  onPressed: () {
+                    Provider.of<NotesProvider>(context, listen: false)
+                          .saveNote(NoteModel(title.text, description.text));
+                    Navigator.pop(context);
+                  },
                   child: Text('SAVE'),
                 )
               ],
@@ -43,10 +51,9 @@ class _StateCreateNote extends State<CreateNote> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Title',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)
-                  ),
+                  Text('Title',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                   TextField(
                     controller: title,
                     decoration: InputDecoration(hintText: 'Fill title'),
@@ -58,7 +65,9 @@ class _StateCreateNote extends State<CreateNote> {
                   ),
                   TextField(
                     controller: description,
-                    decoration: InputDecoration(border: InputBorder.none, hintText: 'Fill your description'),
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Fill your description'),
                     maxLines: 15,
                   )
                 ],

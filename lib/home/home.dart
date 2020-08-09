@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/notes.dart';
+import '../widget/note_item_view.dart';
 import 'create_note.dart';
 
 class Home extends StatefulWidget {
@@ -11,7 +14,8 @@ class Home extends StatefulWidget {
 class _StateHome extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    final notes = Provider.of<NotesProvider>(context, listen: true).notes;
+
     return Scaffold(
       floatingActionButton: OpenContainer(
         transitionDuration: Duration(milliseconds: 300),
@@ -39,7 +43,11 @@ class _StateHome extends State<Home> {
           );
         },
       ),
-      body: Container(),
+      body: SafeArea(
+        child: Column(
+          children: List.generate(notes.length, (index) => NoteItemView(notes[index])),
+        ),
+      ),
     );
   }
 }
