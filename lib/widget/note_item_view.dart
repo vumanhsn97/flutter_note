@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../home/create_note.dart';
 import '../model/note.dart';
 
 class NoteItemView extends StatelessWidget {
@@ -7,9 +9,37 @@ class NoteItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Container(
-      child: Text(note.title),
+
+    return GestureDetector(
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNote(note: note))),
+      child: Container(
+        height: 80,
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(width: 0.5, style: BorderStyle.solid, color: Colors.grey)
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 5),
+            Text(
+              note.title,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              overflow: TextOverflow.clip,
+              maxLines: 1,
+            ),
+            SizedBox(height: 5),
+            Text(
+              note.description,
+              style: TextStyle(fontStyle: FontStyle.italic),
+              overflow: TextOverflow.clip,
+              maxLines: 2,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

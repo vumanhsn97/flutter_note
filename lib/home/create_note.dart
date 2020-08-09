@@ -5,6 +5,9 @@ import '../provider/notes.dart';
 import '../model/note.dart';
 
 class CreateNote extends StatefulWidget {
+  final NoteModel note;
+  CreateNote({this.note});
+
   @override
   _StateCreateNote createState() => _StateCreateNote();
 }
@@ -12,17 +15,22 @@ class CreateNote extends StatefulWidget {
 class _StateCreateNote extends State<CreateNote> {
   TextEditingController title;
   TextEditingController description;
+  bool canSave = true;
 
   @override
   void initState() {
-    title = TextEditingController();
-    description = TextEditingController();
+    title = TextEditingController(
+        text: widget.note != null ? widget.note.title : '');
+    description = TextEditingController(
+        text: widget.note != null ? widget.note.description : '');
+    if (widget.note != null) {
+      canSave = false;
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -34,14 +42,17 @@ class _StateCreateNote extends State<CreateNote> {
                 FlatButton(
                     onPressed: () => Navigator.pop(context),
                     child: Icon(Icons.clear)),
-                FlatButton(
-                  onPressed: () {
-                    Provider.of<NotesProvider>(context, listen: false)
-                          .saveNote(NoteModel(title.text, description.text));
-                    Navigator.pop(context);
-                  },
-                  child: Text('SAVE'),
-                )
+                canSave
+                    ? FlatButton(
+                        onPressed: () {
+                          Provider.of<NotesProvider>(context, listen: false)
+                              .saveNote(
+                                  NoteModel(title.text, description.text));
+                          Navigator.pop(context);
+                        },
+                        child: Text('SAVE'),
+                      )
+                    : Container()
               ],
             ),
             Divider(),
@@ -57,6 +68,19 @@ class _StateCreateNote extends State<CreateNote> {
                   TextField(
                     controller: title,
                     decoration: InputDecoration(hintText: 'Fill title'),
+                    onChanged: (text) {
+                      if (widget.note != null &&
+                          widget.note.title == title.text &&
+                          widget.note.description == description.text) {
+                        setState(() {
+                          canSave = false;
+                        });
+                      } else {
+                        setState(() {
+                          canSave = true;
+                        });
+                      }
+                    },
                   ),
                   SizedBox(height: 30),
                   Text(
@@ -65,6 +89,19 @@ class _StateCreateNote extends State<CreateNote> {
                   ),
                   TextField(
                     controller: description,
+                    onChanged: (text) {
+                      if (widget.note != null &&
+                          widget.note.title == title.text &&
+                          widget.note.description == description.text) {
+                        setState(() {
+                          canSave = false;
+                        });
+                      } else {
+                        setState(() {
+                          canSave = true;
+                        });
+                      }
+                    },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Fill your description'),

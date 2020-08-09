@@ -44,8 +44,15 @@ class _StateHome extends State<Home> {
         },
       ),
       body: SafeArea(
-        child: Column(
-          children: List.generate(notes.length, (index) => NoteItemView(notes[index])),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: SingleChildScrollView(
+            child: Column(
+              children: List.generate(notes.length, (index) => Container(
+                margin: EdgeInsets.only(bottom: 10),
+                child: NoteItemView(notes[index]))),
+            ),
+          ),
         ),
       ),
     );
