@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => NotesProvider())],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Flutter Note',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,

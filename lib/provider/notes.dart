@@ -5,7 +5,7 @@ import '../model/note.dart';
 class NotesProvider with ChangeNotifier { 
   List<NoteModel> notes = [];
 
-  void loadFromLocal() async{
+  Future<void> loadFromLocal() async{
     LocalStorage storage  = new LocalStorage('flutter_note');
     var ready = await storage.ready;
     if (ready) {
@@ -39,6 +39,12 @@ class NotesProvider with ChangeNotifier {
       notes.removeWhere((element) => element.id == note.id);
       notes = [note, ...notes];
     }
+    saveToLocal();
+    notifyListeners();
+  }
+
+  void removeNote(NoteModel note) {
+    notes.removeWhere((element) => element.id == note.id);
     saveToLocal();
     notifyListeners();
   }

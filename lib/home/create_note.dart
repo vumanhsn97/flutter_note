@@ -50,7 +50,7 @@ class _StateCreateNote extends State<CreateNote> {
                                   NoteModel(title.text, description.text));
                           Navigator.pop(context);
                         },
-                        child: Text('SAVE'),
+                        child: Text('LƯU'),
                       )
                     : Container()
               ],
@@ -62,12 +62,12 @@ class _StateCreateNote extends State<CreateNote> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Title',
+                  Text('Tiêu đề',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                   TextField(
                     controller: title,
-                    decoration: InputDecoration(hintText: 'Fill title'),
+                    decoration: InputDecoration(hintText: 'Nhập tiêu đề'),
                     onChanged: (text) {
                       if (widget.note != null &&
                           widget.note.title == title.text &&
@@ -84,7 +84,7 @@ class _StateCreateNote extends State<CreateNote> {
                   ),
                   SizedBox(height: 30),
                   Text(
-                    'Description',
+                    'Nội dung',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   TextField(
@@ -104,7 +104,7 @@ class _StateCreateNote extends State<CreateNote> {
                     },
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Fill your description'),
+                        hintText: 'Nhập nội dung'),
                     maxLines: 15,
                   )
                 ],
